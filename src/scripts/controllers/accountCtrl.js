@@ -1,15 +1,17 @@
 import moment from 'moment';
 
-angular.module('financier').controller('accountCtrl', function ($translate, $timeout, $document, $element, $scope, $rootScope, $stateParams, data, transaction, payee, myBudget, budgetRecord, Hotkeys) {
+var fapp = angular.module('financier').controller('accountCtrl', function ($translate, $timeout, $document, $element, $scope, $rootScope, $stateParams, data, transaction, payee, myBudget, budgetRecord, Hotkeys) {
   const that = this;
 
   const Transaction = transaction($stateParams.budgetId);
   const Payee = payee($stateParams.budgetId);
+  $rootScope.dbCtrl = $scope.dbCtrl;
+  $rootScope.actCtrl = this;
 
   const { manager } = data;
-
+  $rootScope.sumBalance = 0;
   this.accountId = $stateParams.accountId;
-
+  
   if ($stateParams.accountId) {
     this.account = manager.getAccount($stateParams.accountId);
 
@@ -207,6 +209,8 @@ angular.module('financier').controller('accountCtrl', function ($translate, $tim
   this.selectAll = () => {
     this.selectedTransactions = $scope.displayedTransactions;
   };
+
+  $scope.tempdata = [];
 
   this.isAllSelected = val => {
     if (angular.isDefined(val)) {
@@ -420,3 +424,82 @@ angular.module('financier').controller('accountCtrl', function ($translate, $tim
     Hotkeys.deregisterHotkey(clearedHotkeys);
   });
 });
+
+
+
+/* This searches transactions */
+angular.module('financier').filter('searchFromTransactions', function($rootScope, $filter) {
+    return function (input, search) {
+
+        var output = [];
+        var sumBalance = 0;
+
+        if (!search) {
+            output = input;
+        } else {
+            angular.forEach(input, function (item) {             
+                var i = '';
+                if (item.transfer && item.transfer.account) {
+                    i = item.transfer.account;
+                }
+                  //payee
+                var payee = $rootScope.dbCtrl.getAccountName(i) || $rootScope.dbCtrl.getPayeeName(item.payee);
+                var category = $rootScope.dbCtrl.getCategoryName(item.category, item.date) || $rootScope.actCtrl.transactionNeedsCategory(item);
+                var memo = item._data.memo ? item._data.memo : "";              
+
+                var searchField = (payee ? payee : " " ) + (category ? category : " ") + (memo ? memo : " ");
+                if( searchField.toLowerCase().indexOf( search) != -1 ) {
+                  output.push(item);
+                }
+            });
+        }
+        
+        //sumBalance Logic
+        for (var i in output) {
+          if (output[i].inflow) {
+              sumBalance = parseInt(sumBalance + (output[i].inflow || 0));
+          }
+        }
+        sumBalance = Math.abs(sumBalance);
+        var intCurrency = $filter('intCurrency')(sumBalance, true, 2);
+        var currency = $filter('currency')(intCurrency, '$', 2);
+        $rootScope.sumBalance = currency;
+        //
+
+        return output;
+    }
+})
+
+angular.module('financier').filter('searchByDateStartEnd', function($rootScope, $filter) {
+    return function (input, dateStart, dateEnd) {      
+        var output = []; 
+        var sumBalance = 0;
+        
+        var dateStart = $filter('date')(dateStart, "yyyy-MM-dd");
+
+        var dateEnd = $filter('date')(dateEnd, "yyyy-MM-dd");       
+        if (!dateEnd || !dateStart) {
+            output = input;
+        } else {
+            angular.forEach(input, function (item) {
+                var i = '';
+                if (item._data.date >= dateStart && item._data.date <= dateEnd) {
+                    output.push(item);
+                }
+            });
+        }
+
+        //sumBalance Logic
+        for (var i in output) {
+          if (output[i].inflow) {
+              sumBalance = parseInt(sumBalance + (output[i].inflow || 0));
+          }
+        }
+        sumBalance = Math.abs(sumBalance);
+        var intCurrency = $filter('intCurrency')(sumBalance, true, 2);
+        var currency = $filter('currency')(intCurrency, '$', 2);
+        $rootScope.sumBalance = currency;
+        //
+        return output;
+    }
+})

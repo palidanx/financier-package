@@ -38,6 +38,27 @@ angular.module('financier').controller('dbCtrl', function (exportCsv, monthManag
     });
   };
 
+  this.accountFilteredExport = output => {
+    var tmpoutput = {};
+    for (var i in output) {
+      if (!tmpoutput[output[i].id]) {
+        tmpoutput[output[i].id] = output[i];
+      }
+    }
+    this.manager.transactions = tmpoutput;    
+    exportCsv.create({
+      transactions:Object.keys(this.manager.transactions).map(id => this.manager.transactions[id]),
+      accounts: this.accounts,
+      masterCategories: this.masterCategories,
+      categories: this.categories,
+      payees: this.payees,
+      currencySymbol: this.currencySymbol,
+      currencyDigits: this.currencyDigits,
+      months: this.manager.months,
+      budgetName: this.budgetRecord.name
+    });
+  };
+
   this.getTransactionHeight = trans => {
     const unitHeight = 30; // one "row" of transaction table
     let rows;
