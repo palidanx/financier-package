@@ -1,0 +1,146 @@
+.ngdialog.ngdialog-theme-default .ngdialog-content {
+  background-color: $white;
+  border-radius: 0;
+  border: 5px solid $primary;
+}
+
+.ngdialog.ngdialog-theme-default--danger .ngdialog-content {
+  border: 5px solid $danger;
+}
+
+
+.modal__info {
+  font-size: 0.7em;
+  line-height: 1.4;
+  padding: 0.5em;
+  margin-top: 1em;
+  color: white;
+  background-color: $blue-hover;
+}
+
+.modal {
+  line-height: 1.5;
+
+  h1,
+  h2,
+  h3 {
+    text-align: center;
+  }
+
+  .split {
+    display: flex;
+
+    * {
+      flex: 1;
+      margin-left: 4px;
+      margin-right: 4px;
+
+      &:first-child {
+        margin-left: 0;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  form {
+    label {
+      font-size: 0.9em;
+      display: block;
+      margin-top: 0.5em;
+    }
+
+    input,
+    select {
+      display: block;
+      width: 100%;
+      padding: 5px 10px;
+      font-size: 1rem;
+      line-height: 1.5em;
+      height: 2.2em;
+      border: 1px solid #bbb;
+      background: none;
+
+      &:focus {
+        border-color: $primary;
+        outline: 0;
+      }
+
+      &:invalid,
+      &.ng-invalid {
+        &.ng-touched {
+          border-color: $danger;
+        }
+      }
+    }
+  }
+
+  footer {
+    display: flex;
+    margin-top: 1em;
+    text-align: center;
+
+    button {
+      flex: 1;
+      padding: 0.8em 0;
+      font-size: 0.8rem;
+      background-color: $white;
+      border: 1px solid #bbb;
+      text-transform: uppercase;
+
+      transition: background-color 250ms ease;
+
+      &:focus {
+        outline: 0;
+      }
+
+      &:hover {
+        background-color: #eee;
+      }
+
+      &:active {
+        background-color: #ddd;
+      }
+
+      &.primary {
+        background-color: $primary;
+        color: $white;
+
+        &:hover {
+          background-color: lighten($primary, 10%);
+        }
+
+        &:active {
+          background-color: darken($primary, 10%);
+        }
+
+        &:disabled {
+          background-color: desaturate($primary, 20%);
+        }
+      }
+
+      &.danger {
+        background-color: $danger;
+        color: $white;
+
+        &:hover {
+          background-color: lighten($danger, 10%);
+        }
+
+        &:active {
+          background-color: darken($danger, 10%);
+        }
+
+        &:disabled {
+          background-color: desaturate($danger, 20%);
+        }
+      }
+
+      &:not(:last-child) {
+        margin-right: 8px;
+      }
+    }
+  }
+}

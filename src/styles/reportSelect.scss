@@ -1,0 +1,63 @@
+.report-select {
+  display: flex;
+  background-color: $dark-gray;
+  margin: 0;
+  padding: 0;
+  font-weight: 300;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+$triangle-size: 5px;
+
+.report-select__item {
+  flex: 1;
+  max-width: 14em;
+  margin-right: 1em;
+  padding: ($triangle-size * 2) 1em;
+  min-height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.2;
+  font-size: 0.9em;
+  color: $white;
+  position: relative;
+  cursor: pointer;
+
+  opacity: 0.8;
+
+  transition: opacity 250ms ease;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &::after {
+    content: '';
+    background-color: #eee;
+    left: calc(50% - #{$triangle-size});
+    bottom: -$triangle-size;
+    width: $triangle-size * 2;
+    height: $triangle-size * 2;
+    position: absolute;
+
+    transform: rotate(45deg) translate($triangle-size, $triangle-size);
+
+    transition: transform 250ms ease;
+  }
+}
+
+.report-select__item--selected {
+  opacity: 1;
+
+  &::after {
+    transform: rotate(45deg) translate(0, 0);
+  }
+}

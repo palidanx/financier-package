@@ -1,0 +1,115 @@
+.month-overview {
+}
+
+.month-overview__cell-head {
+  font-weight: 400;
+  font-size: 0.8em;
+  background-color: $cell-header;
+}
+
+.month-overview__cell-head,
+.month-overview__cell {
+  text-align: right;
+  // border: 1px solid $primary;
+}
+
+.month-overview__month-overview {
+  position: relative;
+
+  background-color: $dark-gray;
+  color: $white;
+  font-weight: 400;
+  text-align: center;
+}
+
+.month-overview__quick-budget {
+  position: absolute;
+
+  right: 0;
+
+  line-height: 1.8;
+  width: 1.8em;
+
+  z-index: 2;
+
+  opacity: 0.5;
+
+  cursor: pointer;
+
+  transition: opacity 250ms ease;
+
+  &:hover,
+  &.drop-enabled {
+    opacity: 1;
+  }
+}
+
+.month-overview__month-text {
+  font-size: 1.3em;
+  text-transform: capitalize;
+}
+
+.month-overview__month-overview--current {
+  $size: 1em;
+
+  &::after {
+    border-left: $size solid transparent;
+    border-top: $size solid $danger;
+    content: '';
+    height: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 0;
+  }
+}
+
+.month-overview__month-overview--old {
+  background-color: lighten($dark-gray, 15%);
+}
+
+.month-overview__month-list {
+  display: inline-block;
+  font-size: 0.8em;
+  margin: 0 auto;
+
+  dt {
+    float: left;
+    clear: left;
+    width: 6em;
+    text-align: right;
+  }
+
+  dd {
+    font-weight: 300;
+    color: $light-gray;
+    text-align: left;
+    margin-left: 7em;
+  }
+
+  dt,
+  dd {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+
+.month-overview__month-total {
+  margin-top: 0.2em;
+  font-size: 2em;
+  line-height: 1em;
+
+  color: $positive-number;
+  cursor: pointer;
+}
+
+.month-overview__month-total--negative {
+  color: $negative-number;
+}
+
+.month-overview__month-total-subtext {
+  font-size: 0.8em;
+  font-weight: 300;
+  margin-bottom: 0.5em;
+}

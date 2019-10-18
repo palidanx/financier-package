@@ -1,0 +1,430 @@
+.app-view {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-view__header {
+  width: 100%;
+}
+
+.app-view__main {
+  flex: 1000;
+  display: flex;
+
+  // For mobile viewport off page stuff
+  overflow: hidden;
+}
+
+.app-view__sidebar {
+  @media (max-width: 600px) {
+    min-width: 250px; // ignore configured sidebar width
+    max-width: 250px; // ignore configured sidebar width
+
+    transform: translateX(-250px);
+
+    transition: transform 250ms ease;
+
+    .app-view--sidebar-open & {
+      transform: translateX(0);
+    }
+  }
+
+
+  width: 15em;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  min-width: 200px;
+  max-width: 350px;
+
+  background: linear-gradient($primary, $dark-primary);
+  color: $white;
+
+  a {
+    text-decoration: none;
+  }
+}
+
+.app-view__budget-options {
+  opacity: 0.5;
+
+  cursor: pointer;
+
+  transition: opacity 250ms ease;
+
+  &:hover,
+  &.drop-enabled {
+    opacity: 1;
+  }
+}
+
+.app-view__sidebar-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  overflow: auto;
+}
+
+.app-view__sidebar-footer {
+}
+
+.app-view__sidebar-footer-offline-warning {
+  background-color: $danger;
+  font-size: 0.8rem;
+  padding: 1em;
+  text-align: center;
+}
+
+.app-view__sidebar-footer--logged-in {
+  position: relative;
+  $height: 30px;
+
+  &:hover,
+  &.drop-enabled {
+    .app-view__sidebar-footer-button {
+      background-color: darken($primary, 10%);
+    }
+  }
+
+  img {
+    flex: 1;
+    width: $height;
+    height: $height;
+    border-radius: 50%;
+  }
+
+  span,
+  img {
+    display: inline-block;
+    float: left;
+  }
+
+  span {
+    width: calc(100% - #{$height});
+    line-height: $height;
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-wrap: nowrap;
+  }
+}
+
+.app-view__sidebar-footer-button {
+  background-color: darken($primary, 5%);
+
+  padding: 10px 15px;
+
+  cursor: pointer;
+
+  position: relative;
+  z-index: 5;
+  overflow: auto;
+}
+
+.app-view__sidebar-footer-button--sign-in {
+  text-align: center;
+}
+
+.app-view__body {
+  flex: 1;
+  position: relative;
+
+  @media (max-width: 600px) {
+    transition: transform 250ms ease;
+    transform: translateX(-250px);
+
+    min-width: 100%;
+
+    .app-view--sidebar-open & {
+      transform: translateX(0);
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.5);
+      }
+    }
+  }
+}
+
+.app-view__sync {
+  margin: 1em;
+  font-size: 0.8em;
+  display: block;
+  text-align: center;
+}
+
+.app-view__sidebar-toggle {
+
+}
+
+.app-view__title {
+  @media (max-width: 600px) {
+    .app-view__sidebar & {
+      display: none;
+    }
+
+  }
+
+  @media (min-width: 601px) {
+    .app-view__header & {
+      display: none;
+    }
+  }
+
+  display: flex;
+  font-size: 1.2em;
+  font-weight: 300;
+  margin: 0;
+  text-align: center;
+
+  // Mobile view page transition overlap
+  position: relative;
+  z-index: $z-title;
+
+  height: 3rem;
+  line-height: 3rem;
+
+  // background-color: rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  background: $primary;
+  color: $white;
+
+  span {
+    width: 3rem;
+    font-size: 1.5em;
+    display: inline-block;
+    background-color: rgba(0, 0, 0, 0.15);
+  }
+
+  a {
+    flex: 1;
+
+    padding: 0 0.5em;
+
+    background: none;
+    transition: all 250ms ease;
+    position: relative;
+
+    text-decoration: none;
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+
+.app-view__links {
+  margin: 0.5rem 0;
+  padding: 0;
+  position: relative;
+}
+
+.app-view__link {
+  display: block;
+  padding: 0 0.2em;
+  font-weight: 300;
+  line-height: 3rem;
+  font-size: 1.05em;
+
+  opacity: 0.8;
+
+  transition: opacity 50ms ease;
+
+  &:hover {
+    opacity: 1;
+    // background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  a {
+    display: flex;
+    padding: 0 0.5em;
+    white-space: nowrap;
+
+    .app-view__link-text {
+      flex: 1;
+
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  i {
+    margin-right: 3px;
+  }
+
+  aside {
+    display: inline-block;
+    font-size: 0.9em;
+    line-height: 3rem;
+    font-weight: 500;
+  }
+
+  &.app-view__link--active {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+}
+
+.app-view__underline {
+  width: 6px;
+  height: 3rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  background: $white;
+  border: 0;
+  transition: 200ms ease;
+}
+
+.app-view__link--active {
+  opacity: 1;
+}
+
+.app-view__accounts {
+  margin: 0;
+  flex: 1;
+}
+
+.app-view__accounts-title {
+  display: flex;
+  font-size: 0.8em;
+  padding: 0 0.5rem;
+  letter-spacing: 1px;
+
+  cursor: pointer;
+}
+
+.app-view__accounts-name,
+.app-view__accounts-value,
+i.app-view__accounts-angle {
+  line-height: 20px;
+}
+
+
+.app-view__accounts-name {
+  flex: 1;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.app-view__accounts-value {
+  font-size: 0.85em;
+}
+
+.app-view__add-account {
+  margin: 0 0.5em;
+  background: none;
+  border: 1px solid white;
+  font-size: 0.85em;
+  font-weight: 300;
+
+  color: $white;
+
+  line-height: 1;
+  padding: 0.5em 1em;
+  display: inline-block;
+  border-radius: 1em;
+
+  opacity: 0.8;
+
+  &::before {
+    content: '+ ';
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &:active {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+.app-view__accounts-angle {
+  vertical-align: top;
+  line-height: 1.4em;
+
+  transition: transform 250ms ease;
+}
+
+.app-view__accounts-angle--collapsed {
+  transform: rotate(-90deg);
+}
+
+.app-view__accounts-list {
+  padding: 0;
+  margin: 0;
+}
+
+.app-view__accounts-list-border {
+  padding: 0.5em 0;
+  margin: 0 0 0.5em;
+
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.app-view__accounts-list-border--no-top {
+  padding-top: 0;
+  border-top-width: 0;
+}
+
+.app-view__account {
+  list-style: none;
+  font-size: 0.9em;
+  display: flex;
+  line-height: 2rem;
+  cursor: pointer;
+  opacity: 0.8;
+  padding: 0 0.5rem;
+
+  transition: opacity 50ms ease;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.app-view__account--active {
+  background-color: rgba(0, 0, 0, 0.3);
+  opacity: 1;
+}
+
+.app-view__account--ghost {
+  // Use instead of visibility: hidden; to prevent bug
+  // where you try to drag an account to the top and it
+  // glitches about
+  color: rgba(0, 0, 0, 0);
+  background: none;
+}
+
+.app-view__name {
+  font-weight: 300;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  flex: 1;
+  padding-right: 5px;
+}
+

@@ -1,0 +1,400 @@
+$budget-month-cell-padding: 2px 5px 0;
+
+.budget {
+  height: 100%;
+}
+
+.budget__table {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  height: 100%;
+}
+
+.budget__tbody,
+.budget__thead,
+.budget__tfoot {
+  flex-grow: 0;
+  flex-shrink: 0;
+  overflow-y: scroll;
+
+  &.overflowable {
+    flex-grow: 1;
+    flex-shrink: 1;
+
+    // For tether.js
+    // https://github.com/HubSpot/tether/issues/135#issuecomment-167601049
+    position: relative;
+  }
+}
+
+.budget__tr {
+  display: flex;
+  flex-direction: row;
+  // flex-grow: 1;
+  flex-shrink: 0;
+}
+
+.budget__td,
+.budget__th {
+  width: 0%;
+  display: block;
+  flex-direction: column;
+  flex-shrink: 1;
+  flex-grow: 1;
+}
+
+.budget__th,
+.budget__td {
+  @for $i from 1 through 18 {
+    &[colspan='#{$i}'] {
+      flex-shrink: $i;
+      flex-grow: $i;
+      flex-basis: 0;
+    }
+  }
+}
+
+.budget__month-end {
+  margin-right: 5px;
+}
+
+i.budget__month-row-note {
+  width: 0;
+  overflow: hidden;
+
+  cursor: pointer;
+
+  &.drop-enabled {
+    width: auto;
+    padding: 0 1px; // prevent cutoff
+    opacity: 1;
+  }
+}
+
+i.budget__auto-suggest {
+  display: none;
+
+  position: absolute;
+  right: -20px;
+  top: 4px;
+  height: 16px;
+  line-height: 16px;
+  width: 16px;
+
+  cursor: pointer;
+
+  text-align: center;
+  background: #ddd;
+
+  &:hover {
+    background: #ccc;
+  }
+
+  &:active {
+    background: #aaa;
+  }
+}
+
+i.budget__auto-suggest--open {
+  display: block;
+}
+
+.budget__month-row-note--category-label {
+  margin-top: 4px;
+  margin-left: 2px;
+}
+
+i.budget__month-row-note--showing {
+  width: auto;
+  padding: 0 1px; // prevent cutoff
+  opacity: 0.5;
+}
+
+.budget__month--current {
+
+}
+
+.budget__month-row {
+  padding: $budget-month-cell-padding;
+  transition: color 250ms linear;
+
+  box-sizing: content-box;
+
+  &:hover {
+    .budget__month-row-note {
+      width: auto;
+      padding: 0 1px; // prevent cutoff
+      opacity: 1;
+    }
+  }
+}
+
+.budget__month-row--zero {
+  color: #aaa;
+}
+
+.budget__month-row--none {
+  // We want completely transparent for when the bg changes,
+  // but we want other element aspects to remain intact (border, etc)
+  color: rgba(255, 255, 255, 0);
+}
+
+.budget__month-row--negative {
+  color: $white;
+  border-radius: 10px;
+  background-color: $danger;
+  padding: 0 5px;
+
+  i {
+    vertical-align: top;
+    padding-top: 3px;
+  }
+}
+
+.budget__month-cell--input {
+  position: relative;
+
+  height: 18px;
+
+  .budget__month-row--last & {
+    margin-bottom: 0;
+  }
+
+  // we want the input to emulate the cell
+  // ...
+  // prepare yoself before u wrek yoself
+  input {
+    // cancel out padding from the cell
+    // we can't set padding from the cell to zero
+    // because it would wreck the layout
+    margin-left: -5px;
+    margin-top: -2px;
+
+    // "effective" 100%, after adding margin
+    width: calc(100% + 4px);
+
+    font-size: 12px;
+
+    // now we add the padding back to the input
+    padding: 0 5px 0 0; // explicit for vendor inconsistencies
+
+    // this is weird. 2em "magic number" minus 1px
+    // for border collapsing (see the cell
+    // border-bottom: -1px)
+    height: 22px;
+
+    appearance: none;
+    text-align: right;
+    border: 1px solid lighten(desaturate($primary, 10%), 20%);
+
+    // should override the grey border of the cell to
+    // the right (after in the DOM, aka on top by default)
+    position: relative;
+    z-index: $z-month-cell-input;
+
+    background: white;
+
+    &:hover,
+    &:focus {
+      // make sure all borders are seen of the
+      // important cell
+      z-index: $z-month-cell-input-focus;
+      border: 1px solid darken($primary, 20%);
+    }
+
+    &:focus {
+      outline: none;
+
+      ~ .budget__auto-suggest {
+        display: block;
+      }
+    }
+  }
+
+  .budget__month-row-note {
+    position: absolute;
+    left: 0.5em;
+    top: 0;
+    line-height: 2em;
+
+    z-index: $z-month-cell-note;
+  }
+}
+
+.budget__month-cell--display {
+  border-top: 1px dotted #ddd;
+  border-left: 1px dotted #ddd;
+
+  height: 20px;
+
+  &.budget__month-end {
+    border-right: 1px dotted #ddd;
+  }
+
+  .budget__month-row--last & {
+    border-bottom: 1px dotted #ddd;
+  }
+}
+
+.budget__month-row--ghost {
+  visibility: hidden;
+}
+
+.budget__category-sortable {
+  // Drop area for categories when empty
+  min-height: 3px;
+}
+
+.budget__category-label {
+  font-size: 0.8em;
+  flex-basis: 150px;
+  height: 20px;
+  flex-grow: 0;
+  max-width: 250px;
+  min-width: 30px;
+
+  padding: 0 5px;
+  box-sizing: content-box;
+
+  // text-align: left;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  position: relative;
+
+  span {
+    padding-left: 15px;
+  }
+
+  &:hover {
+    .budget__add-category {
+      width: 1em;
+    }
+  }
+}
+
+.budget__master-category-label {
+  span {
+    padding-left: 5px;
+  }
+}
+
+.budget__categories-label {
+  position: absolute;
+  bottom: 0;
+  left: 20px;
+  right: 0;
+  overflow: hidden;
+
+  color: #999;
+}
+
+.budget__category-label-container {
+  display: flex;
+}
+
+.budget__category-label-container--category {
+  margin-top: 2px;
+}
+
+.budget__category-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.budget__category-name--fill {
+  flex: 1;
+}
+
+.budget__add-master-category {
+  display: inline-block;
+
+  width: 1em;
+  height: 1em;
+  margin: 0.25em;
+
+  line-height: 1;
+
+  vertical-align: top;
+
+  text-align: center;
+
+  background-color: #999;
+  color: $white;
+
+  cursor: pointer;
+
+  &::after {
+    content: '+';
+  }
+}
+
+.budget__add-category {
+  width: 0;
+
+  overflow: hidden;
+
+  height: 1em;
+  margin: 0.25em 0;
+
+  line-height: 1;
+
+  vertical-align: top;
+
+  text-align: center;
+
+  background-color: #999;
+  color: $white;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  &::after {
+    content: '+';
+  }
+
+  &.drop-enabled {
+    width: 1em;
+  }
+}
+
+i.budget__category-collapse {
+  width: 10px;
+  height: 10px;
+  line-height: 10px;
+
+  font-size: 1.2em;
+  text-align: center;
+
+  cursor: pointer;
+
+  transition: 250ms ease transform;
+}
+
+.budget__category-collapse--closed {
+  transform: rotate(-90deg);
+}
+
+.budget__category-label--expanded {
+  height: auto;
+}
+
+.budget__category-resize-handle {
+  position: absolute;
+  top: 0;
+  right: -3px;
+  width: 6px;
+  bottom: 0;
+  z-index: 2;
+  cursor: col-resize;
+}
+
+.budget__outflow-link {
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

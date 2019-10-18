@@ -1,0 +1,108 @@
+.view-transition {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+
+  // prepare for change
+  transform: translate3d(0, 0, 0);
+}
+
+.state-user-app-manager-view-budget.ng-enter {
+  animation: slideInLeft 0.5s both ease;
+}
+
+.state-user-app-manager-view-budget.ng-leave {
+  animation: slideOutLeft 0.5s both ease;
+}
+
+.state-user-app-manager-view-account.ng-enter {
+  animation: slideInRight 0.5s both ease;
+}
+
+.state-user-app-manager-view-account.ng-leave {
+  animation: slideOutRight 0.5s both ease;
+}
+
+$reports: 'netWorth' 'heatMap';
+
+@each $report-name in $reports {
+  .state-user-app-manager-view-budget + .state-user-app-manager-view-reports-#{$report-name}.ng-leave {
+    animation: slideOutRight 0.5s both ease;
+  }
+
+  .state-user-app-manager-view-account + .state-user-app-manager-view-reports-#{$report-name}.ng-leave {
+    animation: slideOutLeft 0.5s both ease;
+  }
+
+  .state-user-app-manager-view-reports-#{$report-name}.state-user-app-manager-view-budget-leave.ng-enter {
+    animation: slideInRight 0.5s both ease;
+  }
+
+  .state-user-app-manager-view-reports-#{$report-name}.state-user-app-manager-view-account-leave.ng-enter {
+    animation: slideInLeft 0.5s both ease;
+  }
+}
+
+.state-user-app-manager-view-account + .state-user-app-manager-view-account.ng-leave {
+  animation: none;
+}
+
+.state-user-app-manager-view-account.state-user-app-manager-view-account-leave.ng-enter {
+  animation: none;
+}
+
+// slide in from the bottom
+@keyframes slideOutLeft {
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+// slide in from the right
+@keyframes slideInRight {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+// slide in from the bottom
+@keyframes slideOutRight {
+  to {
+    transform: translateY(100%);
+  }
+}
+
+// slide in from the right
+@keyframes slideInLeft {
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+.view-transition__fade {
+  // start 'enter' transition on main view
+  &.ng-enter {
+    // transition on enter for 0.5s
+    transition: 0.5s;
+
+    // start with opacity 0 (invisible)
+    opacity: 0;
+  }
+
+  // end 'enter' transition on main view
+  &.ng-enter-active {
+    // end with opacity 1 (fade in)
+    opacity: 1;
+  }
+}

@@ -1,0 +1,44 @@
+.mobile-keypad {
+  flex: 6;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  margin: -1px;
+  overflow: hidden;
+}
+
+.mobile-keypad__number {
+  flex: 1 1 auto;
+  width: 30%;
+
+  background: $form-border-inactive;
+  font-size: 2em;
+  font-weight: 300;
+
+  margin: 1px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:active {
+    background: darken($form-border-inactive, 10%);
+  }
+}
+
+.mobile-keypad__number--backspace {
+  svg {
+    width: 40px;
+  }
+}
+
+
+.mobile-keypad__number--primary {
+  background-color: $primary;
+  color: white;
+
+  &:active {
+    background: darken($primary, 10%);
+  }
+}

@@ -1,0 +1,44 @@
+.virtual-list {
+  overflow-y: auto;
+  flex: 1;
+
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+
+  // For tether.js
+  // https://github.com/HubSpot/tether/issues/135#issuecomment-167601049
+  position: relative;
+
+  .canvas {
+    position: relative;
+    min-height: 100%;
+  }
+
+  .vs-repeat-before-content,
+  .vs-repeat-after-content {
+    background: repeating-linear-gradient(
+      to bottom,
+      $white,
+      $white 30px,
+      lighten($primary, 43%) 30px,
+      lighten($primary, 43%) 60px
+    );
+  }
+
+  .vs-repeat-after-content {
+    flex: 1;
+  }
+
+  &.odd-total {
+    .vs-repeat-after-content {
+      background: repeating-linear-gradient(
+        to bottom,
+        lighten($primary, 43%),
+        lighten($primary, 43%) 30px,
+        $white 30px,
+        $white 60px
+      );
+    }
+  }
+}

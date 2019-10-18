@@ -1,0 +1,74 @@
+.button {
+  border: 0;
+  cursor: pointer;
+  background: $light-gray;
+  padding: 0.25em 0.75em;
+}
+
+.button--primary {
+  background-color: $primary;
+  color: $white;
+
+  transition: background-color 100ms linear;
+
+  &:hover {
+    background-color: lighten($primary, 10%);
+  }
+
+  &:disabled {
+    background-color: desaturate($primary, 70%);
+
+    cursor: default;
+  }
+}
+
+.button--danger {
+  background-color: $danger;
+  color: $white;
+
+  transition: background-color 100ms linear;
+
+  &:hover {
+    background-color: lighten($danger, 10%);
+  }
+
+  &:disabled {
+    background-color: desaturate($danger, 70%);
+
+    cursor: default;
+  }
+}
+
+.button--danger-alt {
+  i {
+    color: $danger;
+  }
+}
+
+.button--link-danger {
+  background: none;
+
+  color: $danger;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:disabled {
+    background-color: desaturate($danger, 70%);
+  }
+}
+
+.button--link-primary {
+  background: none;
+
+  color: $blue-hover;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:disabled {
+    background-color: desaturate($blue-hover, 70%);
+  }
+}

@@ -1,0 +1,36 @@
+.month-body {
+}
+
+.month-body__cell-head {
+  font-size: 12px;
+}
+
+.month-body__cell-head,
+.month-body__cell {
+  text-align: right;
+}
+
+.month-body__row {
+  &:hover {
+    background: #f9f9f9;
+  }
+}
+
+.month-body__month-body {
+  background-color: $dark-gray;
+  color: $white;
+  font-weight: 400;
+}
+
+.month-body__row--master {
+  font-weight: bold;
+
+  &,
+  &:hover {
+    background-color: #efefef;
+  }
+
+  .month-body__cell-head {
+    border-bottom: 0;
+  }
+}

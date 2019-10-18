@@ -1,0 +1,29 @@
+.alert {
+  // TODO remove these 2 rules that make this
+  // go on top of box-shadow of welcome page
+  position: relative;
+  z-index: 2;
+
+  text-align: center;
+  color: $white;
+  line-height: 2;
+
+  button {
+    background: none;
+    border: 0;
+
+    position: absolute;
+    right: 0;
+    line-height: 2;
+    padding: 0 0.5em;
+    color: $white;
+  }
+}
+
+.alert--danger {
+  background-color: $danger;
+}
+
+.alert--info {
+  background-color: $primary-alt;
+}

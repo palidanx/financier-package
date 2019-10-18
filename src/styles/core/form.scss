@@ -1,0 +1,24 @@
+.form__textarea {
+  line-height: 1;
+  padding: 5px;
+  width: 100%;
+
+  border: 1px solid $form-border-inactive;
+
+  &:focus {
+    border-color: $primary;
+
+    outline: 0;
+  }
+}
+
+.form__textarea--monospace {
+  font-family: monospace;
+  font-size: 1.2em;
+}
+
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}

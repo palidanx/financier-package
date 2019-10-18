@@ -1,0 +1,102 @@
+.month-select {
+  display: flex;
+
+  font-weight: 300;
+
+  // Flexbox subpixel rendering hack
+  margin-left: -1px;
+  width: calc(100% + 1px);
+}
+
+.month-select__month {
+  flex: 1;
+
+  position: relative;
+
+  text-transform: capitalize;
+}
+
+.month-select__month,
+.month-select__year {
+  @media (max-width: 600px) {
+    display: none;
+  }
+}
+
+
+.month-select__month--current {
+  $size: 0.5em;
+
+  &::after {
+    border-left: $size solid transparent;
+    border-top: $size solid $danger;
+    content: '';
+    height: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 0;
+  }
+}
+
+.month-select__control,
+.month-select__year,
+.month-select__month {
+  text-align: center;
+  color: $white;
+  background-color: $primary;
+
+  padding: 0.25em 0;
+}
+
+.month-select__control,
+.month-select__month {
+  cursor: pointer;
+  transition: background-color 250ms linear;
+
+  &:hover {
+    background-color: lighten($primary, 5%);
+  }
+}
+
+.month-select__month--selected {
+  &,
+  &:hover {
+    background-color: lighten($primary, 10%);
+  }
+}
+
+.month-select__control {
+  white-space: nowrap;
+
+  @media (max-width: 600px) {
+    flex: 1;
+  }
+}
+
+.month-select__control-label {
+  display: none;
+
+  @media (max-width: 600px) {
+    display: inline;
+  }
+
+  &:first-child {
+    padding-right: 0.5em;
+  }
+
+  &:last-child {
+    padding-left: 0.5em;
+  }
+}
+
+.month-select__control,
+.month-select__year {
+  padding-left: 0.8em;
+  padding-right: 0.8em;
+}
+
+.month-select__year {
+  background-color: darken($primary, 30%);
+}
+

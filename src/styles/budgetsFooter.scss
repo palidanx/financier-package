@@ -1,0 +1,29 @@
+.budgets-footer {
+  background-color: #eee;
+  color: #999;
+  padding: 1em;
+  font-size: 0.75em;
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
+.budgets-footer__container {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+}
+
+.budgets-footer__version {
+}
+
+.budgets-footer__website {
+  flex: 1;
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      color: #333;
+    }
+  }
+}
