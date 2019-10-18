@@ -76,11 +76,10 @@ sudo ufw delete allow 'Nginx HTTP'
 sudo ufw status
 echo "Type the domain name you have linked with your droplet"
 read domain1
-echo "Type the second domain name you have linked with your droplet"
-read domain2
+
 
 # Get SSL cert
-sudo certbot --nginx -d $domain1 -d $domain2
+sudo certbot --nginx -d $domain1 
 # choose option 2
 # test certbot for auto renwal
 sudo certbot renew --dry-run
