@@ -2,6 +2,12 @@
 # adduser financier
 # usermod -aG sudo financier
 
+# Set up swap file
+sudo dd if=/dev/zero of=/swapfile bs=1M count=1024
+sudo mkswap /swapfile
+sudo swapon /swapfile
+
+
 # Install couchdb
 echo "deb https://apache.bintray.com/couchdb-deb xenial main" | sudo tee -a /etc/apt/sources.list
 curl -L https://couchdb.apache.org/repo/bintray-pubkey.asc | sudo apt-key add -
@@ -15,7 +21,8 @@ sudo apt-get install -y nodejs
 sudo apt-get install -y git
 
 # Get source code
-git clone https://seanrall@bitbucket.org/seanrall/fin.git
+git clone https://github.com/palidanx/financier-package.git fin
+
 
 # Setup couchdb
 cd fin
@@ -23,6 +30,7 @@ npm install
 node ./install/setup_couchdb.js
 
 # Build
+npm config set jobs 1 
 npm run build
 
 # Start Me
